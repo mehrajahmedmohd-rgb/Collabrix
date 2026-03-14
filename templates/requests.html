@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Team Requests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:linear-gradient(to right,#0f172a,#1e293b);
+color:white;
+padding:40px;
+}
+
+h2{
+margin-top:0;
+}
+
+.request-box{
+background:#1e293b;
+padding:20px;
+border-radius:12px;
+margin-top:15px;
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+.btn{
+display:inline-block;
+padding:8px 14px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+margin-right:10px;
+}
+
+.accept{
+background:#22c55e;
+color:white;
+}
+
+.reject{
+background:#ef4444;
+color:white;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+color:#38bdf8;
+text-decoration:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Team Join Requests 📩</h2>
+
+{% if requests %}
+    {% for r in requests %}
+    <div class="request-box">
+        <p><b>Team Invite:</b> {{ r[1] }}</p>
+
+        <a href="/accept/{{ r[0] }}" class="btn accept">✅ Join</a>
+        <a href="/reject/{{ r[0] }}" class="btn reject">❌ Reject</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No pending requests 😌</p>
+{% endif %}
+
+<a href="/dashboard" class="back">← Back to Dashboard</a>
+
+</body>
+</html>

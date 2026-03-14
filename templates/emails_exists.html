@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Already Registered</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.box{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+padding:40px;
+border-radius:15px;
+width:380px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+h2{
+color:#f87171;
+margin-bottom:15px;
+}
+
+p{
+color:#cbd5f5;
+margin-bottom:25px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:8px;
+background:#38bdf8;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Email Already Registered</h2>
+
+<p>This email is already registered in Collabrix.<br>
+Please login to continue.</p>
+
+<a href="/login">
+<button>Go to Login</button>
+</a>
+
+</div>
+
+</body>
+</html>

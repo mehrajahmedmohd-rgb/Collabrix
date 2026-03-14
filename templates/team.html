@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Team Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:linear-gradient(to right,#0f172a,#1e293b);
+color:white;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#0f172a;
+box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+
+.back-btn{
+background:#38bdf8;
+padding:10px 16px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+}
+
+.back-btn:hover{
+background:#0ea5e9;
+}
+
+/* CONTAINER */
+.container{
+padding:40px;
+}
+
+.team-title{
+font-size:32px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#cbd5e1;
+margin-bottom:20px;
+}
+
+/* CREATE PROJECT BUTTON */
+.create-btn{
+display:inline-block;
+margin-top:15px;
+padding:10px 18px;
+background:#38bdf8;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:600;
+transition:0.3s;
+}
+
+.create-btn:hover{
+background:#0ea5e9;
+transform:translateY(-2px);
+}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.card{
+background:#1e293b;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+transition:0.3s;
+border:1px solid transparent;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border:1px solid #38bdf8;
+}
+
+.stats{
+font-size:22px;
+color:#38bdf8;
+margin-top:10px;
+font-weight:bold;
+}
+
+.section-title{
+margin-top:50px;
+font-size:24px;
+font-weight:600;
+}
+
+/* EXIT BUTTON */
+.exit-btn{
+display:inline-block;
+margin-top:25px;
+padding:12px 18px;
+background:linear-gradient(135deg,#ef4444,#dc2626);
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:700;
+box-shadow:0 8px 20px rgba(239,68,68,0.35);
+transition:0.3s;
+}
+
+.exit-btn:hover{
+transform:translateY(-3px);
+}
+
+/* SECTION BOX */
+.section-box{
+margin-top:30px;
+background:#1e293b;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.input-modern{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+outline:none;
+font-size:14px;
+background:#0f172a;
+color:white;
+}
+
+.btn-modern{
+background:#38bdf8;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-modern:hover{
+background:#0ea5e9;
+}
+
+/* PROJECT BUTTONS */
+.project-btn{
+display:inline-block;
+margin-top:8px;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+text-decoration:none;
+font-size:13px;
+margin-right:5px;
+}
+.status-badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:8px;
+font-size:13px;
+font-weight:600;
+margin-top:8px;
+}
+
+.status-active{
+background:#22c55e;
+color:white;
+}
+
+.status-progress{
+background:#38bdf8;
+color:white;
+}
+
+.status-completed{
+background:#0f172a;
+border:1px solid #38bdf8;
+color:#38bdf8;
+}
+/* ===== PREMIUM PROJECT CARD UPGRADE ===== */
+
+.card{
+position:relative;
+overflow:hidden;
+transition:0.35s ease;
+}
+
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(56,189,248,0.18),
+transparent
+);
+transition:0.6s;
+}
+
+.card:hover::before{
+left:100%;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 30px rgba(56,189,248,0.25);
+border:1px solid #38bdf8;
+}
+/* ===== STATUS BADGE PREMIUM ===== */
+
+.status-badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:8px;
+font-size:13px;
+font-weight:600;
+margin-top:8px;
+}
+
+.status-active{
+background:#22c55e;
+color:white;
+}
+
+.status-progress{
+background:#38bdf8;
+color:white;
+}
+
+.status-completed{
+background:#8b5cf6;
+color:white;
+}
+
+@media(max-width:600px){
+.container{
+padding:20px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<h2>{{ team[1] }} 🚀</h2>
+<a href="/dashboard" class="back-btn">← Dashboard</a>
+</div>
+
+<div class="container">
+
+<div class="team-title">Team Dashboard</div>
+
+<a href="/create_project/{{ team[0] }}" class="create-btn">
+🚀 Create Project
+</a>
+
+<p class="subtitle">Manage your collaboration here.</p>
+</br> 
+
+<p style="color:#38bdf8;">👑 Leader: {{ team[2] }}</p>
+
+<p>
+Invite Link:
+<b>http://127.0.0.1:5000/join/{{ team[0] }}</b>
+</p>
+
+<!-- TOP STATS -->
+<div class="cards">
+
+<div class="card">
+<h3>Total Projects</h3>
+<p class="stats">{{ projects|length }}</p>
+</div>
+
+<div class="card">
+<h3>Team Members</h3>
+<p class="stats">{{ members|length }}</p>
+</div>
+
+<div class="card">
+<h3>Team Status</h3>
+<p class="stats">Active ✅</p>
+</div>
+
+</div>
+
+<!-- PROJECTS SECTION -->
+<h2 class="section-title">🚀 Projects</h2>
+
+<div class="cards">
+
+{% for p in projects %}
+<div class="card">
+
+<h3>
+<a href="/project/{{ p[0] }}"
+style="text-decoration:none;color:white;">
+{{ p[2] }}
+</a>
+</h3>
+
+<p style="margin-top:8px;">
+Priority:
+<b style="color:#f59e0b;">{{ p[4] }}</b>
+</p>
+{% if p[4] == "High" %}
+<span style="
+background:#ef4444;
+padding:5px 10px;
+border-radius:6px;
+font-size:12px;
+font-weight:bold;
+">🔥 High Priority</span>
+
+{% elif p[4] == "Medium" %}
+<span style="
+background:#f59e0b;
+padding:5px 10px;
+border-radius:6px;
+font-size:12px;
+font-weight:bold;
+">⚡ Medium Priority</span>
+
+{% else %}
+<span style="
+background:#22c55e;
+padding:5px 10px;
+border-radius:6px;
+font-size:12px;
+font-weight:bold;
+">🌿 Low Priority</span>
+{% endif %}
+
+<!-- STATUS -->
+{% if p[3] == "Active" %}
+<span class="status-badge status-active">Active</span>
+{% elif p[3] == "In Progress" %}
+<span class="status-badge status-progress">In Progress</span>
+{% else %}
+<span class="status-badge status-completed">Completed</span>
+{% endif %}
+
+<br><br>
+
+<br><br>
+
+<a href="/project_status/{{ p[0] }}/Active" class="btn-modern">Active</a>
+<a href="/project_status/{{ p[0] }}/In Progress" class="btn-modern">Progress</a>
+<a href="/project_status/{{ p[0] }}/Completed" class="btn-modern">Done</a>
+<br><br>
+
+<a href="/project_priority/{{ p[0] }}/High"
+class="project-btn"
+style="background:#ef4444;">
+High
+</a>
+
+<a href="/project_priority/{{ p[0] }}/Medium"
+class="project-btn"
+style="background:#f59e0b;">
+Medium
+</a>
+
+<a href="/project_priority/{{ p[0] }}/Low"
+class="project-btn"
+style="background:#22c55e;">
+Low
+</a>
+
+<a href="/delete_project/{{ p[0] }}"
+style="
+background:#ef4444;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+text-decoration:none;
+font-size:13px;
+margin-left:5px;
+">
+Delete
+</a>
+
+</div>
+{% endfor %}
+</div>
+
+<!-- LEADER TRANSFER -->
+
+{% if session["username"] == team[2] %}
+
+<div class="section-box">
+
+<h3 style="margin-top:0;">👑 Transfer Leadership</h3>
+<p style="color:#cbd5e1;margin-top:-5px;">
+Move leadership to another team member
+</p>
+
+<form action="/transfer_leader/{{ team[0] }}" method="POST"
+style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<input type="text"
+name="new_leader"
+placeholder="Enter member username"
+class="input-modern">
+
+<button type="submit" class="btn-modern"
+style="background:#f59e0b;">
+Transfer
+</button>
+
+</form>
+
+</div>
+
+{% endif %}
+<div class="section-box">
+
+<h3 style="margin-top:0;">➕ Invite Member</h3>
+<p style="color:#cbd5e1;margin-top:-5px;">
+Search username and send invite
+</p>
+
+<form action="/add_member/{{ team[0] }}" method="POST"
+style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<input type="text"
+name="username"
+placeholder="Search username..."
+class="input-modern">
+
+<button type="submit" class="btn-modern">
+Send Invite
+</button>
+
+</form>
+
+</div>
+
+<!-- MEMBERS -->
+
+<!-- 💬 TEAM CHAT BUTTON -->
+<div style="margin-bottom:20px;">
+<a href="/team_chat/{{ team[0] }}" 
+style="
+background:#22c55e;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:bold;
+">
+💬 Open Team Chat
+</a>
+</div>
+<h2 class="section-title">Team Members</h2>
+
+<div class="cards">
+{% for m in members %}
+<div class="card">
+
+<h3>
+{{ m[0] }}
+
+{% if m[0] == team[2] %}
+<span style="
+background:#f59e0b;
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+">
+👑 Leader
+</span>
+{% endif %}
+
+</h3>
+
+{% if m[0] == team[2] %}
+<p class="stats">Team Leader</p>
+{% else %}
+<p class="stats">Member 👤</p>
+{% endif %}
+
+<!-- 🔥 REMOVE BUTTON (ONLY LEADER SEE) -->
+{% if session["username"] == team[2] and m[0] != team[2] %}
+<a href="/remove_member/{{ team[0] }}/{{ m[0] }}"
+style="color:red; font-size:12px;">
+❌ Remove
+</a>
+{% endif %}
+
+</div>
+{% endfor %}
+</div>
+
+<a href="/exit_team/{{ team[0] }}" class="exit-btn">
+🚪 Exit Team
+</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Task</title>
+
+<style>
+body{
+background:#0f172a;
+color:white;
+font-family:Poppins;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:#1e293b;
+padding:30px;
+border-radius:15px;
+width:350px;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+}
+
+button{
+width:100%;
+margin-top:15px;
+padding:12px;
+background:#38bdf8;
+border:none;
+border-radius:8px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Edit Task ✏️</h2>
+
+<form method="POST">
+
+<input type="text"
+name="task_name"
+value="{{ task[2] }}"
+required>
+
+<button type="submit">Update Task</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Notifications</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+.container{
+padding:40px;
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:#1e293b;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+background:#38bdf8;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="/dashboard" class="back">
+⬅ Back to Dashboard
+</a>
+
+<h2>🔔 Notifications</h2>
+
+{% for n in notifications %}
+
+<div class="card">
+{{ n[2] }}
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

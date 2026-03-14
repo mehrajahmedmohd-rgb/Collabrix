@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Signup - Collabrix</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.signup-box{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:40px;
+border-radius:15px;
+width:350px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+text-align:center;
+}
+
+.signup-box h2{
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:8px;
+background:#0f172a;
+color:white;
+outline:none;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#38bdf8;
+border:none;
+border-radius:8px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+button:disabled{
+background:#64748b;
+cursor:not-allowed;
+}
+
+.login-link{
+margin-top:15px;
+display:block;
+color:#94a3b8;
+text-decoration:none;
+}
+
+.login-link:hover{
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-box">
+
+<h2>Create Account</h2>
+
+<form method="POST" id="signupForm">
+
+<input type="text" name="username" placeholder="Create Username" required>
+
+<input type="email" name="email" placeholder="Enter your Email" required>
+
+<input type="password" name="password" placeholder="Create Password" required>
+
+<button type="submit" id="signupBtn">Signup</button>
+
+</form>
+
+<a href="/login" class="login-link">Already have an account? Login</a>
+
+</div>
+
+<script>
+
+const form = document.getElementById("signupForm");
+const btn = document.getElementById("signupBtn");
+
+form.addEventListener("submit", function(){
+
+btn.disabled = true;
+btn.innerText = "Sending OTP...";
+
+});
+
+</script>
+
+</body>
+</html>

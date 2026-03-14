@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - Collabrix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Poppins, sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b,#0ea5e9);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* LOGIN BOX */
+.box{
+width:340px;
+padding:35px;
+border-radius:20px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+box-shadow:0 8px 30px rgba(0,0,0,0.35);
+text-align:center;
+color:white;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+/* INPUTS */
+.input-group{
+position:relative;
+margin:12px 0;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+outline:none;
+font-size:14px;
+}
+
+/* EYE ICON */
+.eye{
+position:absolute;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+color:#333;
+font-size:18px;
+}
+
+/* BUTTON */
+button{
+width:100%;
+margin-top:15px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#38bdf8;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+transform:translateY(-2px);
+}
+
+/* LINK */
+a{
+display:block;
+margin-top:15px;
+color:#cbd5e1;
+text-decoration:none;
+}
+
+a:hover{
+color:white;
+}
+
+/* ERROR */
+.error{
+color:#ff6b6b;
+margin-bottom:10px;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Login 👑</h2>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+
+<div class="input-group">
+<input type="text" name="username" placeholder="Username" required>
+</div>
+
+<div class="input-group">
+<input type="password" id="password" name="password" placeholder="Password" required>
+<span class="eye" onclick="togglePassword()">👁️</span>
+</div>
+
+<button type="submit">Login</button>
+
+</form>
+
+<a href="/signup">Create Account</a>
+
+</div>
+
+<script>
+function togglePassword(){
+let pass = document.getElementById("password");
+if(pass.type === "password"){
+pass.type = "text";
+}else{
+pass.type = "password";
+}
+}
+</script>
+
+</body>
+</html>

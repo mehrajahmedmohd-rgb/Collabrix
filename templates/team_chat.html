@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Team Chat</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:#0f172a;
+color:white;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+/* 🔥 HEADER */
+.header{
+background:#1e293b;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.header h2{
+margin:0;
+}
+
+.back{
+color:#38bdf8;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* 🔥 CHAT AREA */
+.chat-box{
+flex:1;
+padding:20px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+/* 🔥 MESSAGE */
+.message{
+max-width:70%;
+padding:10px 15px;
+border-radius:15px;
+font-size:14px;
+word-wrap:break-word;
+position:relative;
+}
+
+/* 🔥 YOUR MESSAGE */
+.me{
+align-self:flex-end;
+background:#38bdf8;
+color:black;
+}
+
+/* 🔥 OTHER MESSAGE */
+.other{
+align-self:flex-start;
+background:#1e293b;
+}
+
+/* 🔥 USERNAME */
+.username{
+font-size:11px;
+opacity:0.7;
+margin-bottom:3px;
+}
+
+/* 🔥 DELETE BUTTON */
+.delete-btn{
+font-size:12px;
+color:red;
+text-decoration:none;
+}
+
+/* 🔥 INPUT AREA */
+.input-box{
+display:flex;
+padding:10px;
+background:#1e293b;
+gap:10px;
+}
+
+/* 🔥 INPUT */
+input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+outline:none;
+}
+
+/* 🔥 BUTTON */
+button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:#22c55e;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- 🔥 HEADER -->
+<div class="header">
+<h2>💬 Team Chat</h2>
+
+<a href="/team/{{ team_id }}" class="back">
+⬅ Back
+</a>
+</div>
+
+<!-- 🔥 CHAT -->
+<div class="chat-box">
+
+{% for msg in messages %}
+
+<div class="message {% if msg[2] == username %}me{% else %}other{% endif %}">
+
+<div class="username">{{ msg[2] }}</div>
+
+<div>{{ msg[3] }}</div>
+
+{% if msg[2] == username %}
+    <div style="font-size:10px; opacity:0.7; margin-top:5px; text-align:right;">
+        {% if msg[4] == 1 %}
+            ✔✔ Seen
+        {% else %}
+            ✔ Sent
+        {% endif %}
+    </div>
+
+    <!-- 🗑 DELETE BUTTON -->
+    <div style="text-align:right; margin-top:5px;">
+        <a href="/delete_message/{{ msg[0] }}/{{ team_id }}" class="delete-btn">
+            🗑 Delete
+        </a>
+    </div>
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- 🔥 INPUT -->
+<form action="/team_chat/{{ team_id }}" method="POST" class="input-box">
+
+<input type="text" name="message" placeholder="Type message..." required>
+
+<button type="submit">Send</button>
+
+</form>
+
+</body>
+</html>

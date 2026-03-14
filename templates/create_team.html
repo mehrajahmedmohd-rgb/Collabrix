@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Team</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(to right,#0f172a,#1e293b);
+color:white;
+}
+
+.box{
+background:#1e293b;
+padding:40px;
+border-radius:15px;
+width:320px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+h2{
+margin-top:0;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+font-size:14px;
+outline:none;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#38bdf8;
+color:white;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+.back{
+margin-top:15px;
+display:block;
+color:#38bdf8;
+text-decoration:none;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Create Team 🚀</h2>
+
+<form method="POST">
+<input type="text" name="team_name" placeholder="Enter Team Name" required>
+<button type="submit">Create Team</button>
+</form>
+
+<a href="/dashboard" class="back">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

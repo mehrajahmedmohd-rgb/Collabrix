@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Collabrix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a,#020617);
+background-size:400% 400%;
+animation:bgmove 15s infinite;
+color:white;
+}
+
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 50px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:22px;
+font-weight:bold;
+}
+
+.logo img{
+height:45px;
+}
+
+.nav-links a{
+margin-left:20px;
+text-decoration:none;
+padding:10px 18px;
+border-radius:8px;
+transition:0.3s;
+font-weight:500;
+}
+
+.login{
+background:transparent;
+border:1px solid #38bdf8;
+color:#38bdf8;
+}
+
+.signup{
+background:#38bdf8;
+color:white;
+}
+
+.nav-links a:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px #38bdf8;
+}
+
+/* HERO */
+
+.hero{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+min-height:80vh;
+padding:60px 20px;
+gap:20px;
+}
+
+.hero img{
+width:200px;
+animation:float 4s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+.hero h1{
+font-size:50px;
+margin:0;
+}
+
+.hero p{
+color:#94a3b8;
+font-size:18px;
+margin:0;
+}
+
+/* GET STARTED BUTTON */
+
+.get-started{
+display:inline-block;
+background:#38bdf8;
+color:white;
+padding:14px 28px;
+border-radius:10px;
+font-size:18px;
+text-decoration:none;
+transition:0.3s;
+margin-top:10px;
+}
+
+.get-started:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #38bdf8;
+}
+
+/* FEATURES */
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+padding:80px 40px;
+max-width:1100px;
+margin:auto;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border-radius:18px;
+padding:35px;
+text-align:center;
+transition:0.4s;
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+.icon{
+font-size:40px;
+margin-bottom:15px;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+font-size:14px;
+color:#94a3b8;
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:50px;
+color:#94a3b8;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.features{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:35px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+<img src="/images/logo.png.jpeg">
+Collabrix
+</div>
+
+<div class="nav-links">
+<a href="/login" class="login">Login</a>
+<a href="/signup" class="signup">Signup</a>
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<img src="/images/logo.png.jpeg">
+
+<h1>Introducing Collabrix</h1>
+
+<p>Manage teams, track projects and collaborate smarter.</p>
+
+<a href="/login" class="get-started">Get Started 🚀</a>
+
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="card">
+<div class="icon">👥</div>
+<h3>Manage Teams</h3>
+<p>Create teams and collaborate with members easily.</p>
+</div>
+
+<div class="card">
+<div class="icon">📁</div>
+<h3>Track Projects</h3>
+<p>Organize and monitor project progress efficiently.</p>
+</div>
+
+<div class="card">
+<div class="icon">✅</div>
+<h3>Assign Tasks</h3>
+<p>Assign tasks with deadlines and track productivity.</p>
+</div>
+
+<div class="card">
+<div class="icon">💬</div>
+<h3>Team Chat</h3>
+<p>Communicate instantly with your team members.</p>
+</div>
+
+<div class="card">
+<div class="icon">🔔</div>
+<h3>Notifications</h3>
+<p>Stay updated with real-time alerts and reminders.</p>
+</div>
+
+<div class="card">
+<div class="icon">📊</div>
+<h3>Activity Tracking</h3>
+<p>Track what your team is doing in real time.</p>
+</div>
+
+</div>
+
+<!-- WHY SECTION -->
+
+<div style="padding:80px 40px; text-align:center;">
+
+<h2 style="font-size:36px; margin-bottom:20px;">
+Why Collabrix?
+</h2>
+
+<p style="color:#94a3b8; margin-bottom:50px;">
+Why use Collabrix instead of WhatsApp or GitHub?
+</p>
+
+<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:30px; max-width:1100px; margin:auto;">
+
+<div class="card">
+<h3>WhatsApp</h3>
+<p>
+WhatsApp is great for chatting but not for managing projects.
+Tasks get lost in chats and teamwork becomes unorganized.
+</p>
+</div>
+
+<div class="card">
+<h3>GitHub</h3>
+<p>
+GitHub is powerful for developers but complex for many teams.
+It mainly focuses on code rather than team productivity.
+</p>
+</div>
+
+<div class="card">
+<h3>Collabrix</h3>
+<p>
+Collabrix combines team management, project tracking, tasks,
+chat, notifications, and activity tracking in one simple platform.
+</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<p><b>Built by Mohd Mehraj Ahmed Siddique</b></p>
+
+<p>Founder of Collabrix</p>
+
+<p>Launching Soon</p>
+
+</div>
+
+</body>
+</html>
