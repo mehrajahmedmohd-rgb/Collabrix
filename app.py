@@ -156,17 +156,18 @@ def create_notification(cursor, username, message):
 # -------- SEND OTP EMAIL --------
 
 def send_otp(email, otp):
+    try:
+        sender = "teamcollabrix@gmail.com"
+        password = "fgacqasqnxhlivjx"
 
-    sender = "teamcollabrix@gmail.com"
-    password = "fgacqasqnxhlivjx"
+        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
+        server.starttls()
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
+        server.login(sender, password)
 
-    server.login(sender, password)
+        subject = "Collabrix Email Verification"
 
-    subject = "Collabrix Email Verification"
-    body = f"""
+        body = f"""
 Hello,
 
 Welcome to Collabrix!
@@ -182,15 +183,18 @@ Please enter this code to complete your signup.
 If you did not request this, you can safely ignore this email.
 
 Best regards,
-founder of collabrix :
-mohd mehraj ahmed siddique
+Founder of Collabrix
+Mohd Mehraj Ahmed Siddique
 """
 
-    message = f"Subject: {subject}\n\n{body}"
+        message = f"Subject: {subject}\n\n{body}"
 
-    server.sendmail(sender, email, message)
+        server.sendmail(sender, email, message)
+        server.quit()
 
-    server.quit()    
+    except Exception as e:
+        print("Email error:", e)
+
 
    
 # -------- HOME --------
