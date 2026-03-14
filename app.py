@@ -13,7 +13,7 @@ app.secret_key = "mysecretkey"
 # -------- DATABASE --------
 
 def init_db():
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
 
@@ -244,7 +244,7 @@ def verify_signup():
 
         if str(session.get("signup_otp")) == user_otp:
 
-            conn = sqlite3.connect("users.db")
+            conn = sqlite3.connect("users.db",timeout=10)
             cursor = conn.cursor()
 
             email = session.get("signup_email")
@@ -288,7 +288,7 @@ def login():
         username = request.form.get("username").strip()
         password = request.form.get("password")
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("users.db",timeout=10)
         cursor = conn.cursor()
 
         cursor.execute(
@@ -328,7 +328,7 @@ def dashboard():
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     username = session.get("username")
@@ -501,7 +501,7 @@ def delete_team(team_id):
 
     username = session.get("username")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # 👑 CHECK TEAM LEADER
@@ -568,8 +568,7 @@ def exit_team(team_id):
         return redirect("/login")
 
     username = session.get("username")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # check team leader
@@ -608,7 +607,7 @@ def transfer_leader(team_id):
     new_leader = request.form.get("new_leader")
     current_user = session.get("username")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute("SELECT created_by FROM teams WHERE id=?", (team_id,))
@@ -642,8 +641,7 @@ def add_member(team_id):
         return redirect("/login")
 
     username = request.form.get("username").strip()
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # check user exists
@@ -678,7 +676,7 @@ def create_team():
         if not team_name:
             return redirect("/create_team")
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("users.db",timeout=10)
         cursor = conn.cursor()
 
         try:
@@ -724,9 +722,8 @@ def team_page(team_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+        conn = sqlite3.connect("users.db",timeout=10)
+        cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM teams WHERE id=?", (team_id,))
     team = cursor.fetchone()
@@ -759,9 +756,8 @@ def accept(req_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+        conn = sqlite3.connect("users.db",timeout=10)
+        cursor = conn.cursor()
 
     cursor.execute(
         "SELECT team_id, username FROM team_requests WHERE id=?",
@@ -808,8 +804,8 @@ def reject(req_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+        conn = sqlite3.connect("users.db",timeout=10)
+        cursor = conn.cursor()
 
     cursor.execute(
         "UPDATE team_requests SET status='rejected' WHERE id=?",
@@ -829,7 +825,7 @@ def requests():
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -866,9 +862,8 @@ def create_project(team_id):
         # ⭐ safety (empty project name stop)
         if not project_name:
             return redirect(f"/create_project/{team_id}")
-
-        conn = sqlite3.connect("users.db")
-        cursor = conn.cursor()
+            conn = sqlite3.connect("users.db",timeout=10)
+            cursor = conn.cursor()
 
         # ⭐ project insert
         cursor.execute(
@@ -891,8 +886,7 @@ def project_status(project_id, status):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -913,8 +907,8 @@ def delete_project(project_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+        conn = sqlite3.connect("users.db",timeout=10)
+        cursor = conn.cursor()
 
     cursor.execute(
         "DELETE FROM projects WHERE id=?",
@@ -935,8 +929,8 @@ def project_page(project_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+        conn = sqlite3.connect("users.db",timeout=10)
+        cursor = conn.cursor()
 
     # 🔹 PROJECT FETCH
     cursor.execute(
@@ -1014,7 +1008,7 @@ def create_task(project_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # 🔥 MEMBERS FETCH (IMPORTANT)
@@ -1059,7 +1053,7 @@ def add_task(project_id):
     due_date = request.form.get("due_date")
     assigned_to = request.form.get("assigned_to")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -1086,7 +1080,7 @@ def complete_task(task_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -1106,8 +1100,7 @@ def delete_task(task_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -1127,8 +1120,7 @@ def edit_task(task_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM tasks WHERE id=?", (task_id,))
@@ -1159,7 +1151,7 @@ def toggle_task(task_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute("SELECT status, project_id FROM tasks WHERE id=?", (task_id,))
@@ -1189,7 +1181,7 @@ def add_comment(task_id):
     comment = request.form.get("comment")
     username = session["username"]
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     c = conn.cursor()
 
     c.execute(
@@ -1209,8 +1201,7 @@ def project_priority(project_id, priority):
 
     if not session.get("logged_in"):
         return redirect("/login")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -1231,7 +1222,7 @@ def team_chat(team_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     username = session.get("username")
@@ -1289,7 +1280,7 @@ def delete_message(msg_id, team_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     username = session.get("username")
@@ -1316,7 +1307,7 @@ def notifications():
 
     username = session.get("username")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # 🔥 GET NOTIFICATIONS
@@ -1349,8 +1340,7 @@ def team_activity():
         return redirect("/login")
 
     username = session.get("username")
-
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -1390,7 +1380,7 @@ def upload_file(project_id):
 
         file.save(path)
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("users.db",timeout=10)
         cursor = conn.cursor()
 
         cursor.execute(
@@ -1411,7 +1401,7 @@ def delete_file(file_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -1461,7 +1451,7 @@ def remove_member(team_id, username):
 
     current_user = session.get("username")
 
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
     # 🔍 check leader
