@@ -242,18 +242,19 @@ def signup():
 @app.route("/verify_signup", methods=["GET","POST"])
 def verify_signup():
 
+    error = None
+
     if request.method == "POST":
 
         user_otp = request.form.get("otp")
 
         if str(session.get("signup_otp")) == user_otp:
 
-            conn = sqlite3.connect("users.db",timeout=10)
+            conn = sqlite3.connect("users.db", timeout=10)
             cursor = conn.cursor()
 
             email = session.get("signup_email")
 
-            # 🔍 check if email already exists
             cursor.execute("SELECT * FROM users WHERE email=?", (email,))
             existing_user = cursor.fetchone()
 
@@ -261,7 +262,6 @@ def verify_signup():
                 conn.close()
                 return render_template("emails_exists.html")
 
-            # ✅ create new user
             cursor.execute(
                 "INSERT INTO users (username,email,password) VALUES (?,?,?)",
                 (
@@ -277,22 +277,24 @@ def verify_signup():
             return redirect("/login")
 
         else:
-            return "Invalid OTP"
+            error = "Invalid OTP ❌ Please try again"
 
-    return render_template("verify_signup.html")
+    return render_template("verify_signup.html", error=error)
 
 #------------ login page -----
     
 
 @app.route("/login", methods=["GET","POST"])
 def login():
+
     error = None
 
     if request.method == "POST":
+
         username = request.form.get("username").strip()
         password = request.form.get("password")
 
-        conn = sqlite3.connect("users.db",timeout=10)
+        conn = sqlite3.connect("users.db", timeout=10)
         cursor = conn.cursor()
 
         cursor.execute(
@@ -304,10 +306,10 @@ def login():
 
         if user:
 
-            # 🔥 USER ONLINE STATUS UPDATE
+            # 🔥 UPDATE ONLINE STATUS
             cursor.execute("""
-            INSERT OR REPLACE INTO user_status (username, last_seen)
-            VALUES (?, ?)
+                INSERT OR REPLACE INTO user_status (username, last_seen)
+                VALUES (?, ?)
             """, (username, datetime.now()))
 
             conn.commit()
@@ -319,6 +321,7 @@ def login():
             return redirect("/dashboard")
 
         else:
+
             conn.close()
             error = "Invalid Username or Password ❌"
 
@@ -726,8 +729,9 @@ def team_page(team_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-        conn = sqlite3.connect("users.db",timeout=10)
-        cursor = conn.cursor()
+
+    conn = sqlite3.connect("users.db", timeout=10)
+    cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM teams WHERE id=?", (team_id,))
     team = cursor.fetchone()
@@ -760,8 +764,9 @@ def accept(req_id):
 
     if not session.get("logged_in"):
         return redirect("/login")
-        conn = sqlite3.connect("users.db",timeout=10)
-        cursor = conn.cursor()
+
+    conn = sqlite3.connect("users.db",timeout=10)
+    cursor = conn.cursor()
 
     cursor.execute(
         "SELECT team_id, username FROM team_requests WHERE id=?",
@@ -775,19 +780,16 @@ def accept(req_id):
         team_id = data[0]
         username = data[1]
 
-        # member add
         cursor.execute(
             "INSERT INTO team_members (team_id, username) VALUES (?, ?)",
             (team_id, username)
         )
 
-        # request accepted
         cursor.execute(
             "UPDATE team_requests SET status='accepted' WHERE id=?",
             (req_id,)
         )
 
-        # 🔥 ACTIVITY LOG
         log_activity(
             cursor,
             username,
@@ -808,8 +810,8 @@ def reject(req_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-        conn = sqlite3.connect("users.db",timeout=10)
-        cursor = conn.cursor()
+    conn = sqlite3.connect("users.db",timeout=10)
+    cursor = conn.cursor()
 
     cursor.execute(
         "UPDATE team_requests SET status='rejected' WHERE id=?",
@@ -819,7 +821,7 @@ def reject(req_id):
     conn.commit()
     conn.close()
 
-    return redirect("/requests")    
+    return redirect("/requests") 
 
 # -------- REQUESTS PAGE --------
 
@@ -853,23 +855,20 @@ def requests():
 @app.route("/create_project/<int:team_id>", methods=["GET","POST"])
 def create_project(team_id):
 
-    # login check
     if not session.get("logged_in"):
         return redirect("/login")
 
+    conn = sqlite3.connect("users.db", timeout=10)
+    cursor = conn.cursor()
+
     if request.method == "POST":
 
-        # ⭐ form se data lo
         project_name = request.form.get("project_name").strip()
         priority = request.form.get("priority")
 
-        # ⭐ safety (empty project name stop)
         if not project_name:
             return redirect(f"/create_project/{team_id}")
-            conn = sqlite3.connect("users.db",timeout=10)
-            cursor = conn.cursor()
 
-        # ⭐ project insert
         cursor.execute(
             "INSERT INTO projects (team_id, project_name, status, priority) VALUES (?, ?, ?, ?)",
             (team_id, project_name, "Active", priority)
@@ -880,6 +879,7 @@ def create_project(team_id):
 
         return redirect(f"/team/{team_id}")
 
+    conn.close()
     return render_template("create_project.html", team_id=team_id)
 
 # -------- PROJECT STATUS --------
@@ -890,6 +890,7 @@ def project_status(project_id, status):
 
     if not session.get("logged_in"):
         return redirect("/login")
+
     conn = sqlite3.connect("users.db",timeout=10)
     cursor = conn.cursor()
 
@@ -911,8 +912,8 @@ def delete_project(project_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-        conn = sqlite3.connect("users.db",timeout=10)
-        cursor = conn.cursor()
+    conn = sqlite3.connect("users.db",timeout=10)
+    cursor = conn.cursor()
 
     cursor.execute(
         "DELETE FROM projects WHERE id=?",
@@ -933,8 +934,8 @@ def project_page(project_id):
     if not session.get("logged_in"):
         return redirect("/login")
 
-        conn = sqlite3.connect("users.db",timeout=10)
-        cursor = conn.cursor()
+    conn = sqlite3.connect("users.db", timeout=10)
+    cursor = conn.cursor()
 
     # 🔹 PROJECT FETCH
     cursor.execute(
@@ -956,7 +957,7 @@ def project_page(project_id):
     )
     comments = cursor.fetchall()
 
-    # 🔥 TEAM MEMBERS FETCH (FIXED)
+    # 🔥 TEAM MEMBERS FETCH
     cursor.execute("""
         SELECT username FROM team_members
         WHERE team_id = (
@@ -965,7 +966,7 @@ def project_page(project_id):
     """, (project_id,))
     members = cursor.fetchall()
 
-    # 🔥 FILES FETCH (NEW FEATURE)
+    # 🔥 FILES FETCH
     cursor.execute(
         "SELECT * FROM files WHERE project_id=?",
         (project_id,)
@@ -979,19 +980,15 @@ def project_page(project_id):
         progress = 0
     else:
         completed_tasks = 0
-
         for t in tasks:
             if t[3] == "Completed":
                 completed_tasks += 1
 
         progress = int((completed_tasks / total_tasks) * 100)
-
-        # optional smooth UI
         progress = int(progress / 10) * 10
 
     conn.close()
 
-    # 🔥 CURRENT DATE (OVERDUE CHECK)
     current_date = str(datetime.now().date())
 
     return render_template(
@@ -1000,9 +997,9 @@ def project_page(project_id):
         tasks=tasks,
         comments=comments,
         progress=progress,
-        members=members,           # ✅ IMPORTANT
-        current_date=current_date, # ✅ IMPORTANT
-        files=files                # 🔥 NEW (FILES SEND TO HTML)
+        members=members,
+        current_date=current_date,
+        files=files
     )
 #--------- TASK --------
 

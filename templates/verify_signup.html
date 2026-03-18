@@ -92,6 +92,18 @@ color:#38bdf8;
 <h2>Email Verification</h2>
 
 <p>Enter the 6-digit code sent to your email</p>
+{% if error %}
+<p style="
+color:#ef4444;
+background:#1e293b;
+padding:10px;
+border-radius:8px;
+margin-bottom:15px;
+text-align:center;
+">
+{{ error }}
+</p>
+{% endif %}
 
 <form method="POST">
 
