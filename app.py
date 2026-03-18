@@ -279,7 +279,6 @@ def verify_signup():
         else:
             error = "Invalid OTP ❌ Please try again"
 
-    return render_template("verify_signup.html", error=error)
 
 #------------ login page -----
     
@@ -589,7 +588,7 @@ def exit_team(team_id):
     # 👑 LEADER EXIT BLOCK
     if team and team[0] == username:
         conn.close()
-        return render_template("leader_exit_error.html")
+        return render_template("leader_exit_ERROR.html")
 
     # normal member exit
     cursor.execute(
